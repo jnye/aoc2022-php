@@ -1,0 +1,13 @@
+{
+    "name": "jnye/aoc2022-php",
+    "description": "Advent of Code 2022 Solutions in PHP",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joshua Nye",
+            "email": "joshua.nye@gmail.com"
+        }
+    ],
+    "require": {}
+}
