@@ -6,14 +6,11 @@ $elf_inventories = [];
 $elf_number = 0;
 
 // Read input and build a list of lists
-foreach(file('input.txt') as $line) {
-    if(empty(trim($line))) {
+foreach(file('input.txt', FILE_IGNORE_NEW_LINES) as $line) {
+    if($line === '') {
         $elf_number++;
     } else {
-        if (!isset($elf_inventories[$elf_number])) {
-            $elf_inventories[$elf_number] = [];
-        }
-        $elf_inventories[$elf_number][] = (int) $line;
+        $elf_inventories[$elf_number][] = $line;
     }
 }
 
@@ -27,7 +24,7 @@ foreach ($elf_inventories as $inventory) {
 rsort($elf_total_calories);
 
 // First star: Sum of top 1 totals
-$sum_top_one = array_sum(array_slice($elf_total_calories, 0, 1));
+$sum_top_one = $elf_total_calories[0];
 print "Answer 1: $sum_top_one\n";
 
 // Second star: Sum of top 3 totals
