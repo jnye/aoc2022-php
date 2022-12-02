@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../common.php';
+
 function win_score(string $opponent, string $me): int
 {
     return match ($opponent) {
