@@ -9,5 +9,7 @@
             "email": "joshua.nye@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "illuminate/collections": "^9.42"
+    }
 }
