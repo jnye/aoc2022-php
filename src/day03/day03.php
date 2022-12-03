@@ -11,3 +11,12 @@ $answer1 = (new Collection(file('input.txt', FILE_IGNORE_NEW_LINES)))
     ->sum();
 
 print "Answer 1: {$answer1}\n";
+
+$answer2 = (new Collection(file('input.txt', FILE_IGNORE_NEW_LINES)))
+    ->map(fn($line) => (new Collection(str_split($line))))
+    ->chunk(3)
+    ->map(fn($group) => $group->reduce(fn($carry, $item) => $carry == null ? $item : $carry->intersect($item))->unique()->first())
+    ->map(fn($item) => ord($item) > 90 ? ord($item) - ord('a') + 1 : ord($item) - ord('A') + 27)
+    ->sum();
+
+print "Answer 2: {$answer2}\n";
