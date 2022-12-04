@@ -11,6 +11,11 @@ class Range
     {
     }
 
+    private function containsSection(int $section): bool
+    {
+        return $this->start <= $section && $section <= $this->end;
+    }
+
     public function contains(Range $other): bool
     {
         return $this->start <= $other->start && $this->end >= $other->end;
@@ -18,9 +23,11 @@ class Range
 
     public function overlaps(Range $other): bool
     {
-        $self = new Collection(range($this->start, $this->end));
-        $other = new Collection(range($other->start, $other->end));
-        return $self->intersect($other)->count() > 0;
+        return $this->containsSection($other->start) ||
+            $this->containsSection($other->end) || (
+                ($this->start < $other->start && $this->end > $other->end) ||
+                ($other->start < $this->start && $other->end > $this->start)
+            );
     }
 }
 
