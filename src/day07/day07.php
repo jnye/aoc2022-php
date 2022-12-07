@@ -124,3 +124,20 @@ $parser->getRoot()->eachDir(function ($dir) use (&$answer1) {
 });
 
 print "Answer 1: {$answer1}\n";
+
+$dir_map = new Collection();
+$parser->getRoot()->eachDir(function ($dir) use ($dir_map) {
+    $dir_map->push(['name' => $dir->getName(), 'size' => $dir->dirSize()]);
+});
+$dir_map = $dir_map->sortBy('size');
+
+$total_space = 70000000;
+$required_free_space = 30000000;
+$used_space = $parser->getRoot()->dirSize();
+$free_space = $total_space - $used_space;
+$minimum_to_delete = $required_free_space - $free_space;
+
+$dir = $dir_map->firstWhere(fn($item) => $item['size'] >= $minimum_to_delete);
+
+$answer2 = $dir['size'];
+print "Answer 2: {$answer2}\n";
