@@ -68,7 +68,7 @@ class Forest
                 $tree_height = $this->heights[$coord->index()];
                 $tree_index = $coord->index();
                 foreach (['north', 'east', 'south', 'west'] as $direction) {
-                    $max_tree_height_seen = $this->max_tree_height($coord, $direction);
+                    $max_tree_height_seen = $this->maxTreeHeight($coord, $direction);
                     if ($tree_height > $max_tree_height_seen) $visible_indexes[] = $tree_index;
                 }
             }
@@ -76,7 +76,7 @@ class Forest
         return count(array_unique($visible_indexes));
     }
 
-    private function max_tree_height(Coord $coord, string $direction): int
+    private function maxTreeHeight(Coord $coord, string $direction): int
     {
         $max = -1;
         while (($coord = $coord->$direction()) !== null) {
