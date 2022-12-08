@@ -85,6 +85,39 @@ class Forest
         return $max;
     }
 
+    public function getMaxScenicScore(): int
+    {
+        $scenic_scores = [];
+        for ($y = 0; $y < $this->height; $y++) {
+            for ($x = 0; $x < $this->width; $x++) {
+                $coord = $this->coord($x, $y);
+                $tree_index = $coord->index();
+                $scenic_scores[$tree_index] = $this->getScenicScore($coord);
+            }
+        }
+        return max($scenic_scores);
+    }
+
+    private function getScenicScore(Coord $coord): int
+    {
+        $scores = [];
+        foreach (['north', 'east', 'south', 'west'] as $direction) {
+            $scores[] = $this->viewingDistance($coord, $direction);
+        }
+        return array_product($scores);
+    }
+
+    private function viewingDistance(Coord $coord, string $direction): int
+    {
+        $distance = 0;
+        $tree_height = $this->heights[$coord->index()];
+        while (($coord = $coord->$direction()) !== null) {
+            $distance++;
+            if ($this->heights[$coord->index()] >= $tree_height) break;
+        }
+        return $distance;
+    }
+
 }
 
 
@@ -93,3 +126,5 @@ $forest = new Forest(file('input.txt', FILE_IGNORE_NEW_LINES));
 $answer1 = $forest->getVisibleTreeCount();
 print "Answer 1: {$answer1}\n";
 
+$answer2 = $forest->getMaxScenicScore();
+print "Answer 2: {$answer2}\n";
