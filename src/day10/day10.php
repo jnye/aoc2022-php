@@ -38,4 +38,14 @@ $answer1 = $sum;
 print "Answer 1: {$answer1}\n";
 Assert::eq($answer1, 13220);
 
-//print "Answer 2: {$answer2}\n";
+print "Answer 2: ";
+foreach ($trace as $cycle => $x) {
+    $sprite_middle = ($cycle - 1) % 40;
+    $dist = abs($sprite_middle - $x);
+    if ($dist <= 1) {
+        print "#";
+    } else {
+        print " ";
+    }
+    if ($cycle % 40 == 0) print "\nAnswer 2: ";
+}
