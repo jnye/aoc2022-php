@@ -147,6 +147,16 @@ class Map
         return !($diff > 1);
     }
 
+    public function enumerateStarts(string $elevation): array
+    {
+        $starts = [];
+        for ($index = 0; $index < strlen($this->heightmap); $index++) {
+            $coord = Coord::fromIndex($this, $index);
+            if ($this->heightAt($coord) == ord($elevation)) $starts[] = $coord;
+        }
+        return $starts;
+    }
+
 }
 
 class Pathfinder
@@ -185,3 +195,13 @@ $pathfinder = new Pathfinder();
 $answer1 = $pathfinder->minimumSteps($map->start(), $map->end());
 print "Answer 1: {$answer1}\n";
 Assert::eq($answer1, 472);
+
+$answer2 = PHP_INT_MAX;
+$starts = $map->enumerateStarts('a');
+foreach ($starts as $start) {
+    $answer = $pathfinder->minimumSteps($start, $map->end());
+    if ($answer === -1) continue;
+    $answer2 = min($answer2, $answer);
+}
+print "Answer 2: {$answer2}\n";
+Assert::eq($answer2, 465);
