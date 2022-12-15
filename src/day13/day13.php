@@ -39,3 +39,14 @@ foreach ($pairs as $pair) {
 
 print "Answer 1: {$answer1}\n";
 Assert::eq($answer1, 5330);
+
+$packets = $lines->push('[[2]]', '[[6]]')
+    ->filter(fn($line) => !empty($line))
+    ->map(fn($line) => json_decode($line))
+    ->toArray();
+usort($packets, fn($a, $b) => compare($a, $b));
+$packets = array_map(fn($a) => json_encode($a), $packets);
+$answer2 = (array_search('[[2]]', $packets) + 1) * (array_search('[[6]]', $packets) + 1);
+
+print "Answer 2: {$answer2}\n";
+Assert::eq($answer2, 27648);
